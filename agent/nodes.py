@@ -71,6 +71,7 @@ def classify_intent_node(state: dict) -> dict:
 # Node 2 — rag_response_node
 # ─────────────────────────────────────────────────────────────────────────────
 
+
 RAG_SYSTEM_PROMPT = """You are AutoStream's friendly and knowledgeable support assistant for ServiceHive.
 AutoStream is an AI-powered automated video editing SaaS for content creators.
 
@@ -79,6 +80,8 @@ the user's question accurately and concisely. If a question falls outside the
 knowledge base, say so honestly rather than guessing.
 
 Keep answers under 120 words. Be warm, professional, and helpful.
+
+CRITICAL: When discussing or comparing subscription plans, ALWAYS explicitly mention their exact monthly prices.
 
 Retrieved Context:
 {context}
