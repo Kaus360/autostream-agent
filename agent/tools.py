@@ -24,5 +24,4 @@ def mock_lead_capture(name: str, email: str, platform: str) -> str:
         f"   Email    : {email}\n"
         f"   Platform : {platform}"
     )
-    print(message)
     return message

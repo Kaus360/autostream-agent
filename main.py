@@ -41,6 +41,7 @@ def main():
     state: AgentState = {
         "messages":      [],
         "intent":        "",
+        "in_lead_flow":  False,
         "name":          None,
         "email":         None,
         "platform":      None,
@@ -69,7 +70,6 @@ def main():
         try:
             state = graph.invoke(state)
         except Exception as exc:
-            print(f"\n[Error] Agent encountered a problem: {exc}")
             print("Agent: Sorry, something went wrong on my end. Please try again.")
             continue
 
@@ -85,7 +85,6 @@ def main():
 
         # ── Stop if lead is fully captured ─────────────────────────────────────
         if state.get("lead_captured"):
-            print("\n[Session complete — lead successfully captured.]\n")
             break
 
 

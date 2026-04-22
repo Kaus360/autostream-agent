@@ -5,7 +5,7 @@ for embedding and retrieval.
 """
 
 from langchain_community.document_loaders import TextLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_text_splitters import RecursiveCharacterTextSplitter
 import os
 
 KNOWLEDGE_BASE_PATH = os.path.join(
@@ -45,5 +45,4 @@ def load_and_chunk():
     """Convenience wrapper: load + chunk in one call."""
     docs = load_documents()
     chunks = chunk_documents(docs)
-    print(f"[RAG Loader] Loaded {len(docs)} document(s), split into {len(chunks)} chunk(s).")
     return chunks

@@ -19,11 +19,9 @@ def _build_vectorstore():
     Embed all knowledge-base chunks and store them in FAISS.
     Uses HuggingFace all-MiniLM-L6-v2 (runs locally, no API key needed).
     """
-    print("[RAG Retriever] Building FAISS vector store …")
     chunks = load_and_chunk()
     embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL)
     vectorstore = FAISS.from_documents(chunks, embeddings)
-    print("[RAG Retriever] Vector store ready.")
     return vectorstore
 
 

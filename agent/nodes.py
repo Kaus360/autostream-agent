@@ -22,7 +22,7 @@ from rag.retriever import retrieve
 
 load_dotenv()
 
-GROQ_MODEL = "llama3-70b-8192"
+GROQ_MODEL = "llama-3.3-70b-versatile"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # Helpers
@@ -64,7 +64,6 @@ def classify_intent_node(state: dict) -> dict:
     """
     user_msg = _last_user_message(state)
     intent = classify_intent(user_msg)
-    print(f"[Intent] '{user_msg[:60]}' → {intent}")
     return {"intent": intent}
 
 
@@ -142,6 +141,14 @@ def lead_collection_node(state: dict) -> dict:
     user_msg = _last_user_message(state)
     updates: dict = {}
 
+    # If we just switched to the lead flow from another intent, ask for the name first.
+    # We do NOT want to use their initial message (e.g. "I want to sign up") as their name.
+    if not state.get("in_lead_flow"):
+        updates["in_lead_flow"] = True
+        reply = "Awesome! I'd love to help you get started. What's your name?"
+        updates["messages"] = _append_assistant(state, reply)
+        return updates
+
     name     = state.get("name")
     email    = state.get("email")
     platform = state.get("platform")
@@ -149,7 +156,6 @@ def lead_collection_node(state: dict) -> dict:
     # ── Parse the user's latest message into the next expected field ──────────
     # We fill fields strictly in order; whichever is first-missing gets filled.
     if not name:
-        # The user just provided their name (or triggered high_intent naturally)
         updates["name"] = user_msg.strip()
         reply = (
             f"Great to meet you, {updates['name']}! 😊\n"
@@ -166,9 +172,10 @@ def lead_collection_node(state: dict) -> dict:
     elif not platform:
         updates["platform"] = user_msg.strip()
         reply = (
-            f"Awesome — {updates.get('platform', user_msg.strip())} is a great choice! "
+            f"Awesome — {updates.get('platform')} is a great choice! "
             "Let me get everything set up for you …"
         )
+        updates["in_lead_flow"] = False
 
     else:
         # All fields already collected — shouldn't normally reach here
