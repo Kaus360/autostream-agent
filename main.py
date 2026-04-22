@@ -11,6 +11,20 @@ StateGraph. Type 'quit', 'exit', or 'bye' to end the session.
 
 import os
 from dotenv import load_dotenv
+
+# ── Suppress HuggingFace / Deep Learning Logs & Warnings ─────────────────────
+os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
+os.environ["HF_HUB_DISABLE_PROGRESS_BARS"] = "1"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
+import warnings
+warnings.filterwarnings("ignore")
+
+import logging
+logging.getLogger("transformers").setLevel(logging.ERROR)
+logging.getLogger("sentence_transformers").setLevel(logging.ERROR)
+logging.getLogger("huggingface_hub").setLevel(logging.ERROR)
+
 from agent.graph import build_graph, AgentState
 
 load_dotenv()
