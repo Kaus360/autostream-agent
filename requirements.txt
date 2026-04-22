@@ -1,0 +1,31 @@
+# AutoStream Agent — Python dependencies
+# Install with: pip install -r requirements.txt
+
+# LangChain core + integrations
+langchain>=0.2.0
+langchain-core>=0.2.0
+langchain-community>=0.2.0
+langchain-groq>=0.1.6
+langchain-huggingface>=0.0.3
+
+# LangGraph — stateful multi-agent orchestration
+langgraph>=0.1.5
+
+# Groq LLM client
+groq>=0.8.0
+
+# HuggingFace sentence-transformers (local embeddings, no API key needed)
+sentence-transformers>=2.7.0
+
+# FAISS vector store (CPU build)
+faiss-cpu>=1.8.0
+
+# Environment variable management
+python-dotenv>=1.0.0
+
+# Twilio (optional — only needed for WhatsApp deployment)
+twilio>=9.0.0
+
+# FastAPI + Uvicorn (optional — only needed for WhatsApp webhook server)
+fastapi>=0.111.0
+uvicorn[standard]>=0.30.0
