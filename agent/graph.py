@@ -20,6 +20,7 @@ from agent.nodes import classify_intent_node, rag_response_node, lead_collection
 class AgentState(TypedDict):
     messages: list          # Full conversation history as plain dicts {role, content}
     intent: str             # Last classified intent
+    in_lead_flow: bool      # Active during lead collection
     name: Optional[str]     # Collected lead field
     email: Optional[str]    # Collected lead field
     platform: Optional[str] # Collected lead field (e.g. YouTube, TikTok …)
@@ -31,8 +32,12 @@ class AgentState(TypedDict):
 def route_after_classify(state: AgentState) -> str:
     """
     Conditional edge: after classify_intent runs, decide which node comes next.
-    high_intent always goes to lead_collection regardless of partial-capture state.
+    If we are actively collecting a lead, continue in lead_collection.
+    Otherwise, high_intent starts lead_collection.
     """
+    if state.get("in_lead_flow"):
+        return "lead_collection"
+
     intent = state.get("intent", "product_inquiry")
     if intent == "high_intent":
         return "lead_collection"

@@ -6,7 +6,7 @@ A conversational AI sales & support agent for **AutoStream** — an AI-powered a
 
 ## Features
 
-- 🧠 **Intent Classification** — every message is classified into `greeting`, `product_inquiry`, or `high_intent` using Groq's `llama3-70b-8192`
+- 🧠 **Intent Classification** — every message is classified into `greeting`, `product_inquiry`, or `high_intent` using Groq's `llama-3.3-70b-versatile`
 - 📚 **RAG Pipeline** — product questions are answered from a local `knowledge_base.md` embedded with HuggingFace `all-MiniLM-L6-v2` and stored in FAISS (no paid embedding API)
 - 🔁 **Multi-turn State** — full conversation history and lead fields persist across turns via LangGraph's `AgentState`
 - 🎯 **Lead Collection** — collects `name → email → platform` one field at a time before firing the capture tool

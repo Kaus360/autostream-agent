@@ -16,7 +16,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-GROQ_MODEL = "llama3-70b-8192"
+GROQ_MODEL = "llama-3.3-70b-versatile"
 
 INTENT_SYSTEM_PROMPT = """You are an intent classifier for AutoStream, a SaaS video-editing platform.
 
